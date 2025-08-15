@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Editor files
+.idea/
+.vscode/
+*.swp
+
+# Python
+__pycache__/
+*.pyc
+
+# Other
+*.log
+
