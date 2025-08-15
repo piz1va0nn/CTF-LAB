@@ -147,10 +147,10 @@ SELECT * FROM products WHERE category = 'Gifts' OR 1=1--' AND released = 1
 
 **Evidence:**
 *Normal category filter shows only 3 products*
-![alt text](LAB01-img/image.png)
+![alt text](A03L01-img/image.png)
 
-*SQL injection payload reveals >12 products including hiddens*
-![alt text](LAB01-img/image-1.png)
+*SQL injection payload reveals >12 products including hidden*
+![alt text](A03L01-img/image-1.png)
 
 ---
 
