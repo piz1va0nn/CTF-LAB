@@ -54,7 +54,9 @@
 
 ---
 
-## OWASP Top 10 Results
+## Findings Summary
+
+### OWASP Top 10 Coverage
 
 | Category | Finding | Risk | Status |
 |----------|---------|------|---------|
@@ -96,12 +98,12 @@
 **Description:**
 The application's product category filter is vulnerable to SQL injection. The category parameter in the WHERE clause is not properly sanitized, allowing attackers to manipulate the SQL query structure. This enables retrieval of hidden products and potentially sensitive database information.
 
-**Proof of Concept:**
+### Proof of Concept
 
 **Original Request (Normal):**
 
 ```http
-GET /filter?category=Gifts  
+GET /filter?category=Gifts   HTTP/2
 
 Host: 0a5a007503ac8026bf82615200d30072.web-security-academy.net  
 
@@ -110,7 +112,8 @@ Host: 0a5a007503ac8026bf82615200d30072.web-security-academy.net
 **Malicious Request (SQL Injection):**
 
 ```http
-GET /filter?category=Gifts'+OR+1=1-- 
+GET /filter?category=Gifts'+OR+1=1-- HTTP/2
+
 
 Host: 0a5a007503ac8026bf82615200d30072.web-security-academy.net
 
@@ -133,32 +136,39 @@ SELECT * FROM products WHERE category = 'Gifts' OR 1=1--' AND released = 1
 -- Everything after -- is commented out
 ```
 
-**Impact:**
+**Steps to Reproduce:**
+
+1. Navigate to target
+2. Enter the following payload in the [parameter name] field: `[payload]`
+3. Click Submit
+4. Observe [expected result demonstrating vulnerability]
+
+**Evidence:**
+*Normal category filter shows only 3 products*
+![alt text](a03-lab01-img/image.png)
+
+*SQL injection payload reveals all products including hidden*
+![alt text](a03-lab01-img/image1.png)
+
+---
+
+### Impact
 
 - **Data Exposure:** Access to unreleased/hidden products that should not be visible
 - **Business Logic Bypass:** Circumvention of application access controls
 - **Information Disclosure:** Potential access to sensitive product data, pricing, or inventory information
 
-**Fix:**
+### Recommendation
 
 - **Immediate:** Implement parameterized queries/prepared statements
 - **Use Object Relational Mapping(ORM)** Use ORM query-building APIs instead of raw SQL strings.
 - **Validate Inputs** Check that the data fits expected patterns.
 
-**Evidence:**
-*Normal category filter shows only 3 products*
-![alt text](A03L01-img/image.png)
-
-*SQL injection payload reveals >12 products including hidden*
-![alt text](A03L01-img/image-1.png)
-
----
-
 ## Conclusion
 
 ### Assessment Summary
 
-This penetration test successfully identified a **critical SQL injection vulnerability** in the PortSwigger Academy lab application's product filtering functionality. The vulnerability allows unauthorized access to hidden product data through manipulation of the `category` parameter in the WHERE clause of the underlying SQL query.
+This penetration test successfully identified a **high SQL injection vulnerability** in the PortSwigger Academy lab application's product filtering functionality. The vulnerability allows unauthorized access to hidden product data through manipulation of the `category` parameter in the WHERE clause of the underlying SQL query.
 
 ## Lab Learning Summary
 
